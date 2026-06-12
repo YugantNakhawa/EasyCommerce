@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Sun, Moon, ShoppingCart,} from "lucide-react";
+import { Sun, Moon, ShoppingCart, } from "lucide-react";
 import { useFilter } from "../context/FilterContext";
 import { useTheme } from "../context/ThemeContext";
 import { useCart } from "../context/CartContext";
 import { keywordList } from "../sampleData/keywordList";
 import type { Product } from "../types/Product";
 import { BASE_API } from "../apis/baseapi";
+import { Link } from "react-router-dom";
 
 interface FetchResponse {
     products: Product[];
@@ -21,11 +22,8 @@ const Sidebar = ({
     const [categories, setCategories] = useState<string[]>([]);
     const [loadingCategories, setLoadingCategories] =
         useState(true);
-
     const { darkMode, toggleTheme } = useTheme();
-
     const { cartItems } = useCart();
-
     const {
         searchQuery,
         setSearchQuery,
@@ -126,11 +124,11 @@ const Sidebar = ({
             "
         >
             {/* Logo */}
-            <div className="mb-8">
+            <Link to="/" className="block mb-8">
                 <h1 className="text-3xl font-bold text-center">
                     EasyCommerce
                 </h1>
-            </div>
+            </Link>
 
             {/* Theme + Cart */}
             <div className="flex gap-3 mb-6">
@@ -336,23 +334,35 @@ const Sidebar = ({
                         <button
                             key={item}
                             onClick={() =>
-                                setKeyword(item)
+                                setKeyword(
+                                    keyword === item
+                                        ? ""
+                                        : item
+                                )
                             }
                             className={`
-                                px-3
-                                py-2
-                                rounded-full
-                                border
-                                text-sm
-                                transition
-                                ${
-                                    keyword === item
-                                        ? "bg-black text-white dark:bg-white dark:text-black"
-                                        : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                                    px-3
+                                    py-2
+                                    rounded-full
+                                    border
+                                    text-sm
+                                    transition
+                                    flex
+                                    items-center
+                                    gap-1
+                                    ${keyword === item
+                                    ? "bg-black text-white dark:bg-white dark:text-black"
+                                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
                                 }
-                            `}
+    `}
                         >
-                            {item}
+                            <span>{item}</span>
+
+                            {keyword === item && (
+                                <span className="font-bold">
+                                    ✕
+                                </span>
+                            )}
                         </button>
                     ))}
                 </div>

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { useCart } from "../context/CartContext";
+import { DUMMY_IMAGE, RAZORPAY_JS } from "../apis/baseapi";
+import { Link } from "react-router-dom";
 
 declare global {
     interface Window {
@@ -37,7 +39,7 @@ const CheckoutPage = () => {
                     );
 
                 script.src =
-                    "https://checkout.razorpay.com/v1/checkout.js";
+                    `${RAZORPAY_JS}`;
 
                 script.onload = () =>
                     resolve(true);
@@ -73,13 +75,13 @@ const CheckoutPage = () => {
 
             currency: "INR",
 
-            name: "Youth Adda",
+            name: "Easy Commerce",
 
             description:
                 "Test Payment",
 
             image:
-                "https://dummyjson.com/icon.png",
+                `${DUMMY_IMAGE}`,
 
             handler: function (
                 response: any
@@ -119,9 +121,26 @@ const CheckoutPage = () => {
 
             {cartItems.length === 0 ? (
                 <div className="text-center py-10">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-xl font-semibold mb-4">
                         Your cart is empty
                     </h2>
+
+                    <Link
+                        to="/"
+                        className="
+                            inline-block
+                            px-6
+                            py-3
+                            bg-blue-600
+                            text-white
+                            rounded-lg
+                            font-medium
+                            hover:bg-blue-700
+                            transition
+                        "
+                    >
+                        Continue Shopping
+                    </Link>
                 </div>
             ) : (
                 <>
@@ -153,7 +172,7 @@ const CheckoutPage = () => {
                                     </div>
 
                                     <p>
-                                        ₹
+                                        $
                                         {(
                                             item.price *
                                             item.quantity
@@ -171,7 +190,7 @@ const CheckoutPage = () => {
                                     Subtotal
                                 </span>
                                 <span>
-                                    ₹
+                                    $
                                     {subtotal.toFixed(
                                         2
                                     )}
@@ -183,7 +202,7 @@ const CheckoutPage = () => {
                                     GST (18%)
                                 </span>
                                 <span>
-                                    ₹
+                                    $
                                     {gst.toFixed(
                                         2
                                     )}
@@ -195,7 +214,7 @@ const CheckoutPage = () => {
                                     Shipping
                                 </span>
                                 <span>
-                                    ₹
+                                    $
                                     {shipping.toFixed(
                                         2
                                     )}
@@ -207,7 +226,7 @@ const CheckoutPage = () => {
                                     Grand Total
                                 </span>
                                 <span>
-                                    ₹
+                                    $
                                     {grandTotal.toFixed(
                                         2
                                     )}
