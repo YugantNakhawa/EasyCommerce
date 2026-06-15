@@ -292,33 +292,42 @@ const Sidebar = ({
                     </p>
                 ) : (
                     <div className="space-y-2">
-                        {categories.map(
-                            (category) => (
-                                <label
-                                    key={category}
-                                    className="flex items-center cursor-pointer"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="category"
-                                        checked={
-                                            selectedCategory ===
+                        {categories.map((category) => (
+                            <label
+                                key={category}
+                                className={`
+                        flex
+                        items-center
+                        cursor-pointer
+                        p-3
+                        rounded-lg
+                        border
+                        transition
+                        ${selectedCategory === category
+                                        ? "bg-blue-600 text-white border-blue-600"
+                                        : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:border-gray-700"
+                                    }
+                    `}
+                            >
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    checked={
+                                        selectedCategory === category
+                                    }
+                                    onChange={() =>
+                                        setSelectedCategory(
                                             category
-                                        }
-                                        onChange={() =>
-                                            setSelectedCategory(
-                                                category
-                                            )
-                                        }
-                                        className="mr-2"
-                                    />
+                                        )
+                                    }
+                                    className="mr-3"
+                                />
 
-                                    <span className="capitalize">
-                                        {category}
-                                    </span>
-                                </label>
-                            )
-                        )}
+                                <span className="capitalize">
+                                    {category}
+                                </span>
+                            </label>
+                        ))}
                     </div>
                 )}
             </section>
